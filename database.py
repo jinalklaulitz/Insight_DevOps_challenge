@@ -8,7 +8,7 @@ pwd = os.environ['POSTGRES_PASSWORD']
 db = os.environ['POSTGRES_DB']
 host = 'db'
 port = '5432'
-engine = create_engine('postgres://%s:%s@%s:%s/%s' % (user, pwd, host, port, db)) 
+engine = create_engine('postgres://%s:%s@%s:%s/%s' % (user, pwd, host, port, db),echo="debug") 
 
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
@@ -22,3 +22,4 @@ def init_db():
     # you will have to import them first before calling init_db()
     import models
     Base.metadata.create_all(bind=engine)
+

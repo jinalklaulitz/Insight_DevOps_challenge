@@ -3,6 +3,7 @@ import os
 
 from flask import Flask, render_template, redirect, url_for
 from forms import ItemForm
+from tables import Success
 from models import Items
 from database import db_session
 
@@ -25,9 +26,15 @@ def success():
  
     qry = db_session.query(Items)
     results = qry.all()
-
-    return str(results)
-  
+    print(results)
+    if not results:
+        flash('No results found!')
+        return redirect('/')
+    else:
+        # display results
+        table = Success(results)
+        table.border = True
+        return render_template('success.html', table=table)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
